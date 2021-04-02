@@ -1,0 +1,17 @@
+---
+
+- name: Set a hostname
+  ansible.builtin.hostname:
+    name: "{{ label | replace('_','-')}}"
+
+- name: Ssh users sub-taks
+  include_tasks: user.yml
+  with_items: "{{ ssh_users }}"
+
+- name: Validate the sudoers file before saving
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: /usr/sbin/visudo -cf %s

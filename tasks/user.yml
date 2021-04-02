@@ -1,0 +1,12 @@
+- name: "Add user {{ item.username }}"
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    groups: "{{ item.groups }}"
+    shell: /bin/bash
+
+- name: Set authorized key taken from file
+  ansible.posix.authorized_key:
+    user: "{{ item.username }}"
+    state: present
+    key: "{{ item.public_key }}"
+  when: item.public_key is defined
