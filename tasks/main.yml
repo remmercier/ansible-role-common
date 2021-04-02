@@ -16,20 +16,20 @@
     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
     validate: /usr/sbin/visudo -cf %s
 
-  - name: Disable root login over SSH
-    ansible.builtin.lineinfile:
-      path: "/etc/ssh/sshd_config"
-      state: present
-      regexp: "^PermitRootLogin"
-      line: "PermitRootLogin no"
-    notify:
-      - restart sshd
+- name: Disable root login over SSH
+  ansible.builtin.lineinfile:
+    path: "/etc/ssh/sshd_config"
+    state: present
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+  notify:
+    - restart sshd
 
-  - name: Disable password authentication over SSH
-    ansible.builtin.lineinfile:
-      path: "/etc/ssh/sshd_config"
-      state: present
-      regexp: "^PasswordAuthentication"
-      line: "PasswordAuthentication no"
-    notify:
-      - restart sshd   
+- name: Disable password authentication over SSH
+  ansible.builtin.lineinfile:
+    path: "/etc/ssh/sshd_config"
+    state: present
+    regexp: "^PasswordAuthentication"
+    line: "PasswordAuthentication no"
+  notify:
+    - restart sshd   
